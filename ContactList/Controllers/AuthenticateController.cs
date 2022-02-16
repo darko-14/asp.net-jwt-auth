@@ -23,24 +23,38 @@ namespace ContactList.Controllers
         {
             ContactListEntities DB = new ContactListEntities();
 
-            var user = DB.Users.Where(c=> c.Username == username && c.Password == password).FirstOrDefault();
+            var user = DB.Users.Where(c=> c.Username == username).FirstOrDefault();
             
             if (user != null)
             {
-                string UserUsername = user.Username;
-                int ID = user.ID;
-                IAuthContainerModel model = JWTService.GetJWTContainerModel(UserUsername, ID.ToString());
-                IAuthService authService = new JWTService(model.SecretKey);
+                var salt = Encoding.UTF8.GetBytes("salt");
+                var hashed = HashService.ComputeHMAC_SHA256(Encoding.UTF8.GetBytes(password), salt);
 
-                string token = authService.GenerateToken(model);
-                if (!authService.IsTokenValid(token))
-                    throw new UnauthorizedAccessException();
+                if (user.Password == Convert.ToBase64String(hashed))
+                {
+                    string UserUsername = user.Username;
+                    int ID = user.ID;
+                    IAuthContainerModel model = JWTService.GetJWTContainerModel(UserUsername, ID.ToString());
+                    IAuthService authService = new JWTService(model.SecretKey);
+
+                    string token = authService.GenerateToken(model);
+                    if (!authService.IsTokenValid(token))
+                        throw new UnauthorizedAccessException();
+                    else
+                    {
+                        return (object)new
+                        {
+                            AccessToken = token,
+                            Expire = DateTime.UtcNow.AddMinutes(1440).ToString()
+                        };
+                    }
+                }
                 else
                 {
+                    //throw new ArgumentException("Wrong password");
                     return (object)new
                     {
-                        AccessToken = token,
-                        Expire = DateTime.UtcNow.AddMinutes(1440).ToString()
+                        Error = "Wrong Credentials"
                     };
                 }
             }

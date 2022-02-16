@@ -60,9 +60,9 @@ namespace ContactList.Controllers
                 newUser.Email = model.Email;
                 var password = model.Password;
 
-                var salt = HashService.GenerateSalt();
+                //var salt = HashService.GenerateSalt();
+                var salt = Encoding.UTF8.GetBytes("salt");
                 var hashed = HashService.ComputeHMAC_SHA256(Encoding.UTF8.GetBytes(password), salt);
-
                 newUser.Password = Convert.ToBase64String(hashed);
 
                 DB.Users.Add(newUser);

@@ -30,7 +30,7 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <Association Name="FK_Contacts_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
@@ -80,7 +80,7 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Contacts" Relationship="ContactListModel.FK_Contacts_Users" FromRole="User" ToRole="Contact" />
         </EntityType>
         <EntityContainer Name="ContactListEntities" annotation:LazyLoadingEnabled="true">
