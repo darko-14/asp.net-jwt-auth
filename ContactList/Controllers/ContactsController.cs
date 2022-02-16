@@ -27,6 +27,9 @@ namespace ContactList.Controllers
         // GET api/<controller>/5
         public object Get(int id)
         {
+
+            JWTService.authenticateUser(this.Request);
+
             ContactListEntities DB = new ContactListEntities();
 
             var contact = DB.Contacts.Where(c => c.ID == id).FirstOrDefault();

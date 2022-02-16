@@ -115,9 +115,6 @@ namespace ContactList.Managers
             }
             else
                 throw new UnauthorizedAccessException();
-
-
-
         }
 
         private SecurityKey GetSymmetricSecurityKey()
