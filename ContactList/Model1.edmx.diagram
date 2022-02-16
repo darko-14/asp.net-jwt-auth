@@ -8,6 +8,8 @@
         <EntityTypeShape EntityType="ContactListModel.User" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ContactListModel.Contact" Width="1.5" PointX="5" PointY="0.75" />
         <AssociationConnector Association="ContactListModel.FK_Contacts_Users" />
+        <EntityTypeShape EntityType="ContactListModel.Number" Width="1.5" PointX="7.25" PointY="0.875" />
+        <AssociationConnector Association="ContactListModel.FK_Numbers_Numbers" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

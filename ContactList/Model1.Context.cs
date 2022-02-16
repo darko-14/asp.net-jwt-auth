@@ -27,5 +27,6 @@ namespace ContactList
     
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Contact> Contacts { get; set; }
+        public virtual DbSet<Number> Numbers { get; set; }
     }
 }

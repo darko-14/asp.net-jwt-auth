@@ -14,11 +14,19 @@ namespace ContactList
     
     public partial class Contact
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Contact()
+        {
+            this.Numbers = new HashSet<Number>();
+        }
+    
         public int ID { get; set; }
         public string Name { get; set; }
         public string Phone { get; set; }
         public int UserId { get; set; }
     
         public virtual User User { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Number> Numbers { get; set; }
     }
 }
