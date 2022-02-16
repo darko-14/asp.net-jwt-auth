@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Web.Http;
 
 namespace ContactList.Controllers
@@ -18,13 +19,13 @@ namespace ContactList.Controllers
         }
 
         // GET api/<controller>/5
-        public object Get(string username, string password)
+        public object Post(string username, string password)
         {
             ContactListEntities DB = new ContactListEntities();
 
             var user = DB.Users.Where(c=> c.Username == username && c.Password == password).FirstOrDefault();
-
-            if(user != null)
+            
+            if (user != null)
             {
                 string UserUsername = user.Username;
                 int ID = user.ID;

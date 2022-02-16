@@ -1,8 +1,10 @@
-﻿using System;
+﻿using ContactList.Managers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Web.Http;
 
 namespace ContactList.Controllers
@@ -56,12 +58,16 @@ namespace ContactList.Controllers
             {
                 newUser.Username = model.Username;
                 newUser.Email = model.Email;
-                newUser.Password = model.Password;
+                var password = model.Password;
+
+                var salt = HashService.GenerateSalt();
+                var hashed = HashService.ComputeHMAC_SHA256(Encoding.UTF8.GetBytes(password), salt);
+
+                newUser.Password = Convert.ToBase64String(hashed);
 
                 DB.Users.Add(newUser);
                 DB.SaveChanges();
                 DB = null;
-
             }
             else
             {

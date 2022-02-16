@@ -93,8 +93,6 @@ namespace ContactList.Managers
             }
         }
 
-        
-
         public static List<Claim> authenticateUser(HttpRequestMessage request)
         {
 
