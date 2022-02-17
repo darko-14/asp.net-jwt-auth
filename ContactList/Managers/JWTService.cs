@@ -28,9 +28,6 @@ namespace ContactList.Managers
         {
             SecretKey = secretKey;
         }
-
-
-
         #endregion
 
         public bool IsTokenValid(string token)
@@ -50,8 +47,8 @@ namespace ContactList.Managers
             {
                 return false;
             }
-
         }
+
         public string GenerateToken(IAuthContainerModel model)
         {
             if (model == null || model.Claims == null || model.Claims.Length == 0)
@@ -69,13 +66,10 @@ namespace ContactList.Managers
             string token = jwtSecurityTokenHandler.WriteToken(securityToken);
 
             return token;
-        }
-
-       
+        }       
 
         public IEnumerable<System.Security.Claims.Claim> GetTokenClaims(string token)
         {
-
             if (string.IsNullOrEmpty(token))
                 throw new ArgumentException("Given token is null or empty");
 
@@ -95,10 +89,7 @@ namespace ContactList.Managers
 
         public static List<Claim> authenticateUser(HttpRequestMessage request)
         {
-
             JWTService service = new JWTService("TW9zaGVFcmVGUHJpdmF0ZUtleq==");
-
-
 
             if (request.Headers.Authorization != null)
             {

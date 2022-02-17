@@ -12,7 +12,7 @@ namespace ContactList.Controllers
         public List<object> Get()
         {
             var claims = JWTService.authenticateUser(this.Request);
-
+            
             ContactListEntities DB = new ContactListEntities();
             DB.Configuration.LazyLoadingEnabled = false;
 

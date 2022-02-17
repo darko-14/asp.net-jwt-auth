@@ -1,0 +1,14 @@
+.form
+{
+    justify-content: center;
+    min-height: 50vh;
+}
+.button-block{
+    width: 100%;
+}
+.form-background
+{
+    justify-content: center;
+    min-height: 22vh;
+    padding: 30px;
+}
