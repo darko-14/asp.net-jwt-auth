@@ -8,5 +8,6 @@ export const authUser = (user) => {
     .then(res => res.json())
     .then(data => {
         localStorage.setItem("Token", data.AccessToken);
+        localStorage.setItem("User", data.User);
     })
 }

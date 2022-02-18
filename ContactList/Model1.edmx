@@ -11,7 +11,8 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Phone" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Profession" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="50" />
           <Property Name="UserId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Numbers">
@@ -102,10 +103,11 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Phone" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="User" Relationship="ContactListModel.FK_Contacts_Users" FromRole="Contact" ToRole="User" />
           <NavigationProperty Name="Numbers" Relationship="ContactListModel.FK_Numbers_Numbers" FromRole="Contact" ToRole="Number" />
+          <Property Name="Profession" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Contacts_Users">
           <End Type="ContactListModel.User" Role="User" Multiplicity="1" />
@@ -160,8 +162,9 @@
           <EntitySetMapping Name="Contacts">
             <EntityTypeMapping TypeName="ContactListModel.Contact">
               <MappingFragment StoreEntitySet="Contacts">
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Profession" ColumnName="Profession" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>

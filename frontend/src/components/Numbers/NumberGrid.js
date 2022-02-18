@@ -13,6 +13,7 @@ import Button from '@mui/material/Button';
 import '../../static/home.css'
 import DeleteIcon from '@mui/icons-material/Delete';
 import UpdateIcon from '@mui/icons-material/Update';
+import { withRouter } from 'react-router-dom'
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -47,11 +48,19 @@ const rows = [
   createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
 
-export default class NumberGrid extends Component {
+class NumberGrid extends Component {
+
+  constructor(props){
+    super(props);
+    this.state = {
+      numbers: []
+    }
+  }
+
   render() {
     return (
     <div>
-      <h1>List of Numbers</h1>
+      <h1>List of Numbers for {this.props.location.state.Name}</h1>
       <div className='home'>
             <Button variant="outlined">
                 <Link underline='none' href="/add-number" variant="body2">   
@@ -70,7 +79,7 @@ export default class NumberGrid extends Component {
             <TableHead>
               <TableRow>
                 <StyledTableCell>Description</StyledTableCell>
-                <StyledTableCell>Contact Phone</StyledTableCell>
+                <StyledTableCell>Phone Number</StyledTableCell>
                 <StyledTableCell align="right">Update</StyledTableCell>
                 <StyledTableCell align="right">Delete</StyledTableCell>
               </TableRow>
@@ -94,3 +103,4 @@ export default class NumberGrid extends Component {
     )
   }
 }
+export default withRouter(NumberGrid)

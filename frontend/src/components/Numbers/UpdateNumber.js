@@ -39,6 +39,9 @@ export default class UpdateContact extends Component {
                                     <Grid item>
                                         <Button className="button-block" variant="contained">Update</Button>
                                     </Grid>
+                                    <Grid item>
+                                        <Button className="button-block" onClick={() => {window.location.href = '/numbers'}} variant="contained">Cancel</Button>
+                                    </Grid>
                                 </Grid>
                             </Paper>
                         </Grid>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import '../../static/form.css'
 import { Paper, Button, Grid, Typography, Link, TextField } from '@mui/material'
+import { createContact } from '../../service/contacts.service';
 
 export default class AddContact extends Component {
 
@@ -8,12 +9,19 @@ export default class AddContact extends Component {
         super(props);
         this.state = {
             name: '',
+            profession: '',
         }
         
     }
 
     handleChange = (e) => {
         this.setState({[e.target.name]: e.target.value});
+    }
+
+    handleSubmit = (e) => {
+        createContact(this.state)
+        window.location.href = '/'
+        
     }
 
     render() {
@@ -28,11 +36,18 @@ export default class AddContact extends Component {
                                         Add New Contact
                                     </Typography>
                                     <Grid item>
-                                        <TextField type="text" placeholder="Contact Name" fullWidth  name="name" 
+                                        <TextField type="text" fullWidth label="Name"  name="name" value={this.state.name} placeholder='Name'
                                         onChange={this.handleChange} variant="outlined" required autoFocus />
                                     </Grid>
                                     <Grid item>
-                                        <Button className="button-block" variant="contained">Add</Button>
+                                        <TextField type="text" fullWidth label="Profession"  name="profession" value={this.state.profession} placeholder='Profession'
+                                        onChange={this.handleChange} variant="outlined" required autoFocus />
+                                    </Grid>
+                                    <Grid item>
+                                        <Button onClick={this.handleSubmit} className="button-block" variant="contained">Add</Button>
+                                    </Grid>
+                                    <Grid item>
+                                        <Button className="button-block" onClick={() => {window.location.href = '/'}} variant="contained">Cancel</Button>
                                     </Grid>
                                 </Grid>
                             </Paper>

@@ -1,21 +1,39 @@
 import React, { Component } from 'react'
 import '../../static/form.css'
 import { Paper, Button, Grid, Typography, Link, TextField } from '@mui/material'
+import { withRouter } from 'react-router-dom'
+import { updateContact } from '../../service/contacts.service'
 
-export default class UpdateContact extends Component {
+class UpdateContact extends Component {
 
     constructor(props){
         super(props);
         this.state = {
-            name: '',
+            name: this.props.location.state ? this.props.location.state.Name : '',
+            profession: this.props.location.state ? this.props.location.state.Profession : '',
         }
-        
+    }
+
+    componentDidMount() {
+        console.log('id', this.props.match.params.id);
+        console.log('state', this.props.location.state);
     }
 
     handleChange = (e) => {
         this.setState({[e.target.name]: e.target.value});
     }
 
+    handleSubmit = (e) => {
+        var contact = {
+            id: this.props.match.params.id,
+            name: this.state.name,
+            profession: this.state.profession
+        }
+        updateContact(contact);
+        console.log(contact)
+        //window.location.href = '/'
+    }
+    
     render() {
         return (
             <div>
@@ -28,11 +46,18 @@ export default class UpdateContact extends Component {
                                         Update Contact
                                     </Typography>
                                     <Grid item>
-                                        <TextField type="text" placeholder="Contact Name" fullWidth  name="name" 
+                                        <TextField type="text" label="Name" fullWidth  name="name" value={this.state.name}
                                         onChange={this.handleChange} variant="outlined" required autoFocus />
                                     </Grid>
                                     <Grid item>
-                                        <Button className="button-block" variant="contained">Update</Button>
+                                        <TextField type="text" label="Profession" fullWidth  name="profession" value={this.state.profession}
+                                        onChange={this.handleChange} variant="outlined" required autoFocus />
+                                    </Grid>
+                                    <Grid item>
+                                        <Button className="button-block" onClick={this.handleSubmit} variant="contained">Update</Button>
+                                    </Grid>
+                                    <Grid item>
+                                        <Button className="button-block" onClick={() => {window.location.href = '/'}} variant="contained">Cancel</Button>
                                     </Grid>
                                 </Grid>
                             </Paper>
@@ -43,3 +68,5 @@ export default class UpdateContact extends Component {
         )
     }
 }
+
+export default withRouter(UpdateContact)

@@ -43,6 +43,7 @@ namespace ContactList.Controllers
                         return (object)new
                         {
                             AccessToken = token,
+                            User = user.Username,
                             Expire = DateTime.UtcNow.AddMinutes(1440).ToString()
                         };
                     }

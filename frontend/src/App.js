@@ -13,8 +13,15 @@ import UpdateNumber from './components/Numbers/UpdateNumber'
 
 class App extends Component {
 
-  componentDidMount(){
+  constructor(){
+    super();
+    this.state={
+      user: localStorage.getItem('User')
+    }
+  }
 
+  componentDidMount(){
+    
   }
 
   render(){
@@ -24,10 +31,13 @@ class App extends Component {
         <Switch>
           <div className="App">
             
-          <Route exact path='/'>
-            <HomePage />
-          </Route>
-
+          <Route exact path='/'>{
+            this.state.user === null ? 
+              <Login />
+            :
+              <HomePage user={this.state.user} />
+            }</Route>
+          
           <Route path='/login'>
             <Login />
           </Route>
@@ -40,7 +50,7 @@ class App extends Component {
             <AddContact />
           </Route>
 
-          <Route path='/update-contact'>
+          <Route path='/update-contact/:id'>
             <UpdateContact />
           </Route>
 
@@ -52,7 +62,7 @@ class App extends Component {
             <AddNumber />
           </Route>
 
-          <Route path='/update-number'>
+          <Route path='/update-number/:id'>
             <UpdateNumber />
           </Route>
 

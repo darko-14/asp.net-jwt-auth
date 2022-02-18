@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Button, Typography, Paper, Link, Grid, TextField } from '@mui/material'
 import '../static/form.css'
 import LoginIcon from '@mui/icons-material/Login';
+import {authUser} from '../service/auth.service'
 
 
 export default class Login extends Component {
@@ -14,7 +15,14 @@ export default class Login extends Component {
         }
     }
 
+    handleSubmit = () => {
+        authUser(this.state);
+        window.location.reload()
+    }
 
+    handleChange = (e) => {
+        this.setState({[e.target.name]: e.target.value});
+    }
 
     render() {
         return (
@@ -28,13 +36,15 @@ export default class Login extends Component {
                                         Login
                                     </Typography>
                                     <Grid item>
-                                        <TextField type="email" placeholder="Username" fullWidth  name="username" variant="outlined" required autoFocus />
+                                        <TextField type="email" placeholder="Username" fullWidth  name="username" label="Username"
+                                        onChange={this.handleChange} variant="outlined" required autoFocus />
                                     </Grid>
                                     <Grid item>
-                                        <TextField type="password" placeholder="Password" fullWidth name="password" variant="outlined" required />
+                                        <TextField type="password" placeholder="Password" fullWidth name="password" label="Password"
+                                        onChange={this.handleChange} variant="outlined" required />
                                     </Grid>
                                     <Grid item>
-                                        <Button className="button-block" startIcon={<LoginIcon />} variant="contained">Login</Button>
+                                        <Button className="button-block" onClick={this.handleSubmit} startIcon={<LoginIcon />} variant="contained">Login</Button>
                                     </Grid>
                                     <Grid item>
                                         <Link href="/register" variant="body2">

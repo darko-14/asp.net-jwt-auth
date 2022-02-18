@@ -11,7 +11,8 @@ namespace ContactList.Controllers
         // GET api/<controller>
         public List<object> Get()
         {
-            var claims = JWTService.authenticateUser(this.Request);
+            //var claims = JWTService.authenticateUser(this.Request);
+            
 
               
             ContactListEntities DB = new ContactListEntities();
@@ -26,8 +27,7 @@ namespace ContactList.Controllers
         // GET api/<controller>/5
         public object Get(int id)
         {
-
-            JWTService.authenticateUser(this.Request);
+            var claims = JWTService.authenticateUser(this.Request);
 
             ContactListEntities DB = new ContactListEntities();
 
@@ -41,9 +41,11 @@ namespace ContactList.Controllers
             {
                 return (object)new
                 {
+                    //Name = claims[0].Value
                     ID = contact.ID,
                     Name = contact.Name,
                     Phone = contact.Phone,
+                    Proffesion = contact.Phone
                 };
             }
         }
@@ -55,12 +57,13 @@ namespace ContactList.Controllers
 
             Contact newContact = new Contact();
 
-            var contact = DB.Contacts.Where(c => c.UserId == 1 && c.Phone == model.Phone).FirstOrDefault();
+            var contact = DB.Contacts.Where(c => c.UserId == 1 && c.Name == model.Name).FirstOrDefault();
 
             if (contact == null)
             {
                 newContact.Name = model.Name;
-                newContact.Phone = model.Phone;
+                newContact.Phone = model.Phone; 
+                newContact.Profession = model.Profession;
                 newContact.UserId = 1;
 
                 DB.Contacts.Add(newContact);
@@ -72,6 +75,7 @@ namespace ContactList.Controllers
                 {
                     ID = newContact.ID,
                     Name = newContact.Name,
+                    Profession = newContact.Profession,
                     Phone = newContact.Phone,
                     UserId = newContact.UserId,
                 };
@@ -95,6 +99,7 @@ namespace ContactList.Controllers
             }
             else
             {
+                contact.Profession = model.Profession;
                 contact.Phone = model.Phone;
                 contact.Name = model.Name;
                 DB.SaveChanges();
@@ -130,6 +135,7 @@ namespace ContactList.Controllers
     public class ContactsApiModel
     {
         public string Name { get; set; }
-        public string Phone { get; set; }
+        public string Profession { get; set; }
+        public string Phone { get; set; }   
     }
 }

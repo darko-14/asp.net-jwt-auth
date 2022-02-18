@@ -30,14 +30,17 @@ export default class AddNumber extends Component {
                                     </Typography>
                                     <Grid item>
                                         <TextField type="text" placeholder="Description" fullWidth  name="description" 
-                                        onChange={this.handleChange} variant="outlined" required autoFocus />
+                                        onChange={this.handleChange} variant="outlined" label="Description" required autoFocus />
                                     </Grid>
                                     <Grid item>
                                         <TextField type="text" placeholder="Contact Number" fullWidth  name="number" 
-                                        onChange={this.handleChange} variant="outlined" required autoFocus />
+                                        onChange={this.handleChange} variant="outlined" label="Contact Number" required autoFocus />
                                     </Grid>
                                     <Grid item>
                                         <Button className="button-block" variant="contained">Add</Button>
+                                    </Grid>
+                                    <Grid item>
+                                        <Button className="button-block" onClick={() => {window.location.href = '/numbers'}} variant="contained">Cancel</Button>
                                     </Grid>
                                 </Grid>
                             </Paper>

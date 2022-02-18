@@ -1,15 +1,27 @@
 import React, { Component } from 'react'
 import { Button, Typography, Paper, Link, Grid, TextField } from '@mui/material'
 import '../static/form.css'
+import { register } from '../service/users.service';
 
 export default class Register extends Component {
 
-  constructor(){
-      super();
-      this.state = {
+constructor(){
+    super();
+    this.state = {
+    username: '',
+    email: '',
+    password: ''
+    }
+}
 
-      }
-  }
+handleChange = (e) => {
+this.setState({[e.target.name]: e.target.value});
+}
+
+handleSubmit = () => {
+    register(this.state)
+    window.location.href = '/login'
+}
 
   render() {
     return (
@@ -23,16 +35,19 @@ export default class Register extends Component {
                                 Register
                             </Typography>
                             <Grid item>
-                                <TextField type="text" placeholder="Username" fullWidth  name="username" variant="outlined" required autoFocus/>
+                                <TextField type="text" placeholder="Username" fullWidth  name="username" label="Username"
+                                onChange={this.handleChange} variant="outlined" required autoFocus/>
                             </Grid>
                             <Grid item>
-                                <TextField type="email" placeholder="Email" fullWidth  name="email" variant="outlined" required autoFocus/>
+                                <TextField type="email" placeholder="Email" fullWidth  name="email" label="Email"
+                                onChange={this.handleChange} variant="outlined" required autoFocus/>
                             </Grid>
                             <Grid item>
-                                <TextField type="password" placeholder="Password" fullWidth  name="password" variant="outlined" required autoFocus/>
+                                <TextField type="password" placeholder="Password" fullWidth  name="password" label="Password"
+                                onChange={this.handleChange} variant="outlined" required autoFocus/>
                             </Grid>
                             <Grid item>
-                                <Button className="button-block" variant="contained">Register</Button>
+                                <Button className="button-block" onClick={this.handleSubmit} variant="contained">Register</Button>
                             </Grid>
                             <Grid item>
                             <Link href='/login' variant='body2'>
