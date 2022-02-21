@@ -32,6 +32,7 @@ namespace ContactList.Managers
 
         public bool IsTokenValid(string token)
         {
+
             if (string.IsNullOrEmpty(token))
                 throw new ArgumentException("Given token is null or empty");
 

@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter as Router, Switch, Route} from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, withRouter} from 'react-router-dom'
 import HomePage from './pages/HomePage';
 import Login from './pages/Login'
 import Register from './pages/Register'
@@ -10,6 +10,7 @@ import { Component } from 'react';
 import NumberGrid from './components/Numbers/NumberGrid'
 import AddNumber from './components/Numbers/AddNumber'
 import UpdateNumber from './components/Numbers/UpdateNumber'
+
 
 class App extends Component {
 
@@ -46,7 +47,7 @@ class App extends Component {
             <Register />
           </Route>
 
-          <Route path='/add-contact'>
+          <Route path='/add-contact/'>
             <AddContact />
           </Route>
 
@@ -58,7 +59,7 @@ class App extends Component {
             <NumberGrid />
           </Route>
 
-          <Route path='/add-number'>
+          <Route path='/add-number/:id'>
             <AddNumber />
           </Route>
 

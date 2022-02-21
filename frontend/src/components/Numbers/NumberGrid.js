@@ -1,51 +1,54 @@
 import React, {Component} from 'react'
-import { styled } from '@mui/material/styles';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
-import Link from '@mui/material/Link';
-import Button from '@mui/material/Button';
+import { DataGrid } from '@mui/x-data-grid';
+import { Box, Button} from '@mui/material';
+import { Link } from 'react-router-dom'
 import '../../static/home.css'
 import DeleteIcon from '@mui/icons-material/Delete';
-import UpdateIcon from '@mui/icons-material/Update';
 import { withRouter } from 'react-router-dom'
+import { getNumbers } from '../../service/numbers.service';
+import ModeEditOutlineSharpIcon from '@mui/icons-material/ModeEditOutlineSharp';
+import {deleteNumber} from '../../service/numbers.service';
 
-
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
+const columns = [
+  { 
+    field: '*', 
+    headerName: '*', 
+    width: 50,
+    renderCell:(params) => {
+      return <input type='checkbox' />
+    }
   },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
+  {
+    field: 'Description',
+    headerName: 'Description',
+    width: 200,
   },
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
-    backgroundColor: theme.palette.action.hover,
+  {
+    field: 'Number',
+    headerName: 'Number',
+    width: 320,
   },
-  // hide last border
-  '&:last-child td, &:last-child th': {
-    border: 0,
+  {
+    field: 'Update',
+    headerName: 'Update',
+    width: 100,
+    renderCell: (params) => {
+      // return <Link to={{pathname: `/update-number/${params.row.id}`, state: params.row}} ><ModeEditOutlineSharpIcon /></Link>;
+      // Button><Link to={`add-number/${this.state.contactID}`}>Add</Link></Button>
+      return <Link to={{pathname: `update-number/${params.row.id}`, state: params.row}} ><ModeEditOutlineSharpIcon /></Link>
+    }
   },
-}));
-
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
+  {
+    field: 'Delete',
+    headerName: 'Delete',
+    width: 100,
+    renderCell: (params) => {
+      return <Button onClick={() => {
+        deleteNumber(params.row.id);
+        window.location.reload()
+      }}><DeleteIcon /></Button>;
+    }
+  },
 ];
 
 class NumberGrid extends Component {
@@ -53,53 +56,51 @@ class NumberGrid extends Component {
   constructor(props){
     super(props);
     this.state = {
-      numbers: []
+      numbers: [],
+      contactID: this.props.location.state.ID,
     }
+  }
+
+  setTheState = (data) => {
+    var list = [];
+    data.map((c, i) => {
+      list.push({
+        id: c.ID,
+        contact_id: c.ContactID,
+        Description: c.Description,
+        Number: c.Number1,
+      }) 
+    })
+    this.setState({ contacts: list })
+    console.log(data);
+    console.log(this.state.contacts);
+  }
+
+  componentDidMount(){
+    var id = this.props.location.state.ID;
+    console.log(this.state.contactID);
+    fetch(`api/Numbers?contactId=${id}`)
+    .then(res => res.json())
+    .then(this.setTheState)
   }
 
   render() {
     return (
-    <div>
-      <h1>List of Numbers for {this.props.location.state.Name}</h1>
-      <div className='home'>
-            <Button variant="outlined">
-                <Link underline='none' href="/add-number" variant="body2">   
-                    Add New Number 
-                </Link>
-            </Button>
-            <Button variant="outlined">
-                <Link underline='none' href="/" variant="body2">   
-                    Go Back
-                </Link>
-            </Button>
+      <div>
+        <div className='table' style={{ height: 500, width: '40%', marginTop: 20}}>
+          <Box display='flex' justifyContent='space-between'>
+              <Button><Link to={`add-number/${this.state.contactID}`}>Add</Link></Button>
+              <Button variant="outlined">
+                  <Link underline='none' to="/" variant="body2">   
+                      Back
+                  </Link>
+              </Button>
+          </Box>
+          <div style={{ height: '100%', width: 'auto' }}>
+            <DataGrid rows={this.state.contacts} columns={columns} />
+          </div>
         </div>
-      <Grid className='table'>
-          <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 700 }} aria-label="customized table">
-            <TableHead>
-              <TableRow>
-                <StyledTableCell>Description</StyledTableCell>
-                <StyledTableCell>Phone Number</StyledTableCell>
-                <StyledTableCell align="right">Update</StyledTableCell>
-                <StyledTableCell align="right">Delete</StyledTableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows.map((row) => (
-                <StyledTableRow key={row.name}>
-                  <StyledTableCell component="th" scope="row">
-                    {row.name}
-                  </StyledTableCell>
-                  <StyledTableCell>{row.calories}</StyledTableCell>
-                  <StyledTableCell align="right"><Link href="/update-number" variant="body2"><UpdateIcon /></Link></StyledTableCell>
-                  <StyledTableCell align="right"><Button><DeleteIcon /></Button></StyledTableCell>
-                </StyledTableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Grid> 
-    </div>
+      </div>
     )
   }
 }

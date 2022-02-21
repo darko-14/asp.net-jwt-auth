@@ -17,7 +17,7 @@ export default class Login extends Component {
 
     handleSubmit = () => {
         authUser(this.state);
-        window.location.reload()
+        window.location.href = '/'
     }
 
     handleChange = (e) => {

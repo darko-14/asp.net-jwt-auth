@@ -10,18 +10,17 @@ namespace ContactList.Controllers
     public class NumbersController : ApiController
     {
         // GET api/<controller>
-        public List<object> Get()
+        public List<object> Get(int contactId)
         {
             ContactListEntities DB = new ContactListEntities(); 
             DB.Configuration.LazyLoadingEnabled = false;
 
-            //var result = DB.Numbers.ToList().Select(c => (object)c).ToList();
-            var result = DB.Numbers.ToList().Select(c => (object)c).ToList();
+            var result = DB.Numbers.Where(c => c.ContactID == contactId).ToList().Select(c => (object)c).ToList();
 
             return result;
         }
 
-        // GET api/<controller>/5
+       /* // GET api/<controller>/5
         public object Get(int id)
         {
             ContactListEntities DB = new ContactListEntities();
@@ -40,21 +39,21 @@ namespace ContactList.Controllers
                     Number = number.Number1,
                 };
             }
-        }
+        }*/
 
         // POST api/<controller>
-        public void Post([FromBody] NumbersApiModel model)
+        public void Post([FromBody] NumbersApiModel model, int contactId)
         {
             ContactListEntities DB = new ContactListEntities();
             Number neWNumber = new Number();
 
-            var number = DB.Numbers.Where(c => c.ContactID == 1 && c.Number1 == model.Number1).FirstOrDefault();
+            var number = DB.Numbers.Where(c => c.ContactID == contactId && c.Number1 == model.Number1).FirstOrDefault();
 
             if(number == null)
             {
                 neWNumber.Description = model.Description;
                 neWNumber.Number1 = model.Number1;
-                neWNumber.ContactID = 1;
+                neWNumber.ContactID = contactId;
 
                 DB.Numbers.Add(neWNumber);
                 DB.SaveChanges();
@@ -68,11 +67,11 @@ namespace ContactList.Controllers
         }
 
         // PUT api/<controller>/5
-        public void Put(int id, [FromBody] NumbersApiModel model)
+        public void Put(int numberId, [FromBody] NumbersApiModel model)
         {
             ContactListEntities DB = new ContactListEntities();
 
-            var number = DB.Numbers.Where(c => c.ID == id).FirstOrDefault();
+            var number = DB.Numbers.Where(c => c.ID == numberId).FirstOrDefault();
 
             if(number == null)
             {
@@ -82,6 +81,7 @@ namespace ContactList.Controllers
             {
                 number.Description = model.Description;
                 number.Number1 = model.Number1;
+
                 DB.SaveChanges();
                 DB.Dispose();
                 DB = null;

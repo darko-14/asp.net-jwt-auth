@@ -1,20 +1,31 @@
 import React, { Component } from 'react'
 import '../../static/form.css'
 import { Paper, Button, Grid, Typography, Link, TextField } from '@mui/material'
+import { updateNumber } from '../../service/numbers.service';
+import { withRouter } from 'react-router-dom'
 
-export default class UpdateContact extends Component {
+class UpdateNumber extends Component {
 
     constructor(props){
         super(props);
         this.state = {
-            description: '',
-            number: ''
+            description: props.location.state ? props.location.state.Description : 'desc',
+            number1: props.location.state ? props.location.state.Number: '',
         }
         
     }
 
+    componentDidMount() {
+        console.log('state', this.props.location.state);
+    }
+
     handleChange = (e) => {
         this.setState({[e.target.name]: e.target.value});
+    }
+
+    handleUpdate = () => {
+        updateNumber(this.props.match.params.id, this.state)
+        window.history.back()
     }
 
     render() {
@@ -29,18 +40,18 @@ export default class UpdateContact extends Component {
                                         Update Number
                                     </Typography>
                                     <Grid item>
-                                        <TextField type="text" placeholder="Description" fullWidth  name="description" 
+                                        <TextField type="text" placeholder="Description" fullWidth  name="description" value={this.state.description}
                                         onChange={this.handleChange} variant="outlined" required autoFocus />
                                     </Grid>
                                     <Grid item>
-                                        <TextField type="text" placeholder="Contact Number" fullWidth  name="number" 
+                                        <TextField type="text" placeholder="Contact Number" fullWidth  name="number1" value={this.state.number1}
                                         onChange={this.handleChange} variant="outlined" required autoFocus />
                                     </Grid>
                                     <Grid item>
-                                        <Button className="button-block" variant="contained">Update</Button>
+                                        <Button className="button-block" onClick={this.handleUpdate} variant="contained">Update</Button>
                                     </Grid>
                                     <Grid item>
-                                        <Button className="button-block" onClick={() => {window.location.href = '/numbers'}} variant="contained">Cancel</Button>
+                                        <Button className="button-block" onClick={() => window.history.back()} variant="contained">Cancel</Button>
                                     </Grid>
                                 </Grid>
                             </Paper>
@@ -51,3 +62,5 @@ export default class UpdateContact extends Component {
         )
     }
 }
+
+export default withRouter(UpdateNumber)

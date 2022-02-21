@@ -11,6 +11,7 @@ namespace ContactList.Controllers
 {
     public class UsersController : ApiController
     {
+        private ContactListEntities DB = new ContactListEntities();
 
         // GET api/<controller>
         public List<object> Get()
@@ -100,9 +101,8 @@ namespace ContactList.Controllers
         // DELETE api/<controller>/5
         public void Delete(int id)
         {
-            ContactListEntities DB = new ContactListEntities();
-
-            var user = DB.Users.Where(c => c.ID == id).FirstOrDefault();
+            
+            var user = this.DB.Users.Where(c => c.ID == id).FirstOrDefault();
 
             if(user == null)
             {
@@ -110,10 +110,10 @@ namespace ContactList.Controllers
             }
             else
             {
-                DB.Users.Remove(user);
-                DB.SaveChanges();
-                DB.Dispose();
-                DB = null;
+                this.DB.Users.Remove(user);
+                this.DB.SaveChanges();
+                this.DB.Dispose();
+                this.DB = null;
             }
         }
     }

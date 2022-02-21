@@ -30,8 +30,7 @@ class UpdateContact extends Component {
             profession: this.state.profession
         }
         updateContact(contact);
-        console.log(contact)
-        //window.location.href = '/'
+        window.location.href = '/'
     }
     
     render() {

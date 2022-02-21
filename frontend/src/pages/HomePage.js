@@ -2,11 +2,13 @@ import React, { Component } from 'react'
 import ContactGrid from '../components/Contacts/ContactGrid'
 import { authUser } from '../service/auth.service'
 import { getContacts } from '../service/contacts.service'
-import { Link, Button } from '@mui/material'
+import { Button, Box } from '@mui/material'
+import {Link} from 'react-router-dom'
 import '../static/home.css'
 import DataGridTable from '../components/DataGridTable'
+import { withRouter } from 'react-router-dom'
 
-export default class HomePage extends Component {
+class HomePage extends Component {
 
     logout = () => {
         localStorage.removeItem('Token');
@@ -16,12 +18,11 @@ export default class HomePage extends Component {
 
     render() {
         return (
-
         <div>
             <h1>Wellcome {this.props.user}</h1>
-            <div className='home'>
+            <Box display='flex' justifyContent='space-between' mx='475px' >
                 <Button variant="outlined">
-                    <Link underline='none' href="/add-contact" variant="body2">   
+                    <Link  to="add-contact">   
                         Add New Contact 
                     </Link>
                 </Button>
@@ -30,10 +31,12 @@ export default class HomePage extends Component {
                     Logout
                     </Link>
                 </Button>
-            </div>
+            </Box>
             {/* <ContactGrid /> */}
             <DataGridTable/> 
         </div>
         )
     }
 }
+
+export default withRouter(HomePage)

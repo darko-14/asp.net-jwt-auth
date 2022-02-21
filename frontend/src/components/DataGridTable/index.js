@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom'
 import DeleteIcon from '@mui/icons-material/Delete';
 import { deleteContact } from '../../service/contacts.service';
 import ModeEditOutlineSharpIcon from '@mui/icons-material/ModeEditOutlineSharp';
+import { withRouter } from 'react-router-dom'
 
 const columns = [
   { 
@@ -42,7 +43,7 @@ const columns = [
     headerName: 'View',
     width: 200,
     renderCell: (params) => {
-      return <Link to={{pathname: `/numbers`, state: params.row}} >View</Link>;
+      return <Link to={{pathname: `/numbers`, state: params.row}}>View</Link>;
     }
   },
   {
@@ -107,4 +108,4 @@ class DataGridTable extends React.Component {
 
 
 
-export default DataGridTable
+export default withRouter(DataGridTable)

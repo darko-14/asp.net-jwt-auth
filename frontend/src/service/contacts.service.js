@@ -1,15 +1,21 @@
 
 export  const getContacts = (callback) => {
-    fetch('api/Contacts')
+    fetch(`api/Contacts`, {
+        headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': "Bearer "+localStorage.getItem('Token')
+        }
+    })
     .then(res => res.json())
     .then(callback)
 }
 
-export const createContact = (contact, callback) => {
-    fetch(`api/Contacts`, {
+export const createContact = (userId, contact) => {
+    fetch(`api/Contacts?userId=${userId}`, {
         method: 'POST',
         headers: { 
             'Content-Type': 'application/json',
+            'Authorization': "Bearer "+localStorage.getItem('Token')
         },
         body: JSON.stringify(contact)
     })
@@ -18,22 +24,22 @@ export const createContact = (contact, callback) => {
 }
 
 export const updateContact = (contact) => {
-    fetch(`api/Contacts?id=${contact.id}`, {
+    fetch(`/api/Contacts?id=${contact.id}`, {
         method: 'PUT',
         headers: { 
             'Content-Type': 'application/json',
+            'Authorization': "Bearer "+localStorage.getItem('Token')
         },
         body: JSON.stringify(contact)
     })
-    .then(res => res.json())
 }
-
 
 export const deleteContact = (id) => {
     fetch(`api/Contacts?id=${id}`, {
         method: 'DELETE',
         headers: { 
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': "Bearer "+localStorage.getItem('Token')
         }
     })
     .then(res => res.json())

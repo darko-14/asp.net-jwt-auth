@@ -1,21 +1,27 @@
 import React, { Component } from 'react'
 import '../../static/form.css'
 import { Paper, Button, Grid, Typography, Link, TextField } from '@mui/material'
+import { withRouter } from 'react-router-dom';
+import {createNumber} from '../../service/numbers.service';
 
-export default class AddNumber extends Component {
+class AddNumber extends Component {
 
     constructor(props){
         super(props);
         this.state = {
             description: '',
-            number: ''
+            number1: ''
         }
-        
     }
 
     handleChange = (e) => {
         this.setState({[e.target.name]: e.target.value});
     }
+
+    handleAddNumber = (id) => {
+        createNumber(this.props.match.params.id, this.state)
+        window.history.back()
+    };
 
     render() {
         return (
@@ -33,11 +39,11 @@ export default class AddNumber extends Component {
                                         onChange={this.handleChange} variant="outlined" label="Description" required autoFocus />
                                     </Grid>
                                     <Grid item>
-                                        <TextField type="text" placeholder="Contact Number" fullWidth  name="number" 
+                                        <TextField type="text" placeholder="Contact Number" fullWidth  name="number1" 
                                         onChange={this.handleChange} variant="outlined" label="Contact Number" required autoFocus />
                                     </Grid>
                                     <Grid item>
-                                        <Button className="button-block" variant="contained">Add</Button>
+                                        <Button className="button-block" variant="contained" onClick={() => this.handleAddNumber(this.props.match.params.id)}>Add</Button>
                                     </Grid>
                                     <Grid item>
                                         <Button className="button-block" onClick={() => {window.location.href = '/numbers'}} variant="contained">Cancel</Button>
@@ -51,3 +57,6 @@ export default class AddNumber extends Component {
         )
     }
 }
+
+
+export default withRouter(AddNumber);

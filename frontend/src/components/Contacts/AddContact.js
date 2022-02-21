@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import '../../static/form.css'
 import { Paper, Button, Grid, Typography, Link, TextField } from '@mui/material'
 import { createContact } from '../../service/contacts.service';
+import { withRouter } from 'react-router-dom'
 
-export default class AddContact extends Component {
+class AddContact extends Component {
 
     constructor(props){
         super(props);
@@ -19,9 +20,8 @@ export default class AddContact extends Component {
     }
 
     handleSubmit = (e) => {
-        createContact(this.state)
+        createContact(this.props.match.params.userId, this.state)
         window.location.href = '/'
-        
     }
 
     render() {
@@ -58,3 +58,5 @@ export default class AddContact extends Component {
         )
     }
 }
+
+export default withRouter(AddContact)

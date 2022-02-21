@@ -8,18 +8,18 @@ namespace ContactList.Controllers
 {
     public class ContactsController : ApiController
     {
+
+        private ContactListEntities DB = new ContactListEntities();
+
         // GET api/<controller>
         public List<object> Get()
         {
-            //var claims = JWTService.authenticateUser(this.Request);
-            
+            var claims = JWTService.authenticateUser(this.Request);
+            var id = int.Parse(claims[1].Value);
 
-              
-            ContactListEntities DB = new ContactListEntities();
-            DB.Configuration.LazyLoadingEnabled = false;
+            this.DB.Configuration.LazyLoadingEnabled = false;
 
-            var result = DB.Contacts.ToList().Select(c => (object)c).ToList();
-
+            var result = this.DB.Contacts.Where(c => c.UserId == id).ToList().Select(c => (object)c).ToList();
             return result;
 
         }
@@ -27,13 +27,13 @@ namespace ContactList.Controllers
         // GET api/<controller>/5
         public object Get(int id)
         {
-            var claims = JWTService.authenticateUser(this.Request);
+            //var claims = JWTService.authenticateUser(this.Request);
 
             ContactListEntities DB = new ContactListEntities();
 
             var contact = DB.Contacts.Where(c => c.ID == id).FirstOrDefault();
 
-            if(contact == null)
+            if (contact == null)
             {
                 return new ArgumentException("Contact does not exist in database");
             }
@@ -52,19 +52,23 @@ namespace ContactList.Controllers
 
         // POST api/<controller>
         public object Post([FromBody] ContactsApiModel model)
+
         {
+            var claims = JWTService.authenticateUser(this.Request);
             ContactListEntities DB = new ContactListEntities();
 
             Contact newContact = new Contact();
 
-            var contact = DB.Contacts.Where(c => c.UserId == 1 && c.Name == model.Name).FirstOrDefault();
+            var id = int.Parse(claims[1].Value);
+
+            var contact = DB.Contacts.Where(c => c.UserId == id && c.Name == model.Name).FirstOrDefault();
 
             if (contact == null)
             {
                 newContact.Name = model.Name;
                 newContact.Phone = model.Phone; 
                 newContact.Profession = model.Profession;
-                newContact.UserId = 1;
+                newContact.UserId = id;
 
                 DB.Contacts.Add(newContact);
                 DB.SaveChanges();
