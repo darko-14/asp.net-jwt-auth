@@ -7,17 +7,10 @@ import { Link } from 'react-router-dom'
 import DeleteIcon from '@mui/icons-material/Delete';
 import { deleteContact } from '../../service/contacts.service';
 import ModeEditOutlineSharpIcon from '@mui/icons-material/ModeEditOutlineSharp';
+import RemoveRedEyeSharpIcon from '@mui/icons-material/RemoveRedEyeSharp';
 import { withRouter } from 'react-router-dom'
 
 const columns = [
-  { 
-    field: '*', 
-    headerName: 'check', 
-    width: 50,
-    renderCell:(params) => {
-      return <input type='checkbox' />
-    }
-  },
   { 
     field: 'id', 
     headerName: '#', 
@@ -26,7 +19,7 @@ const columns = [
   {
     field: 'ID',
     headerName: 'ID',
-    width: 50,
+    width: 80,
   },
   {
     field: 'Name',
@@ -41,9 +34,9 @@ const columns = [
   {
     field: 'View',
     headerName: 'View',
-    width: 200,
+    width: 100,
     renderCell: (params) => {
-      return <Link to={{pathname: `/numbers`, state: params.row}}>View</Link>;
+      return <Link to={{pathname: `/numbers`, state: params.row}} style={{color: '#1976d2'}}><RemoveRedEyeSharpIcon /></Link>;
     }
   },
   {
@@ -51,7 +44,7 @@ const columns = [
     headerName: 'Update',
     width: 100,
     renderCell: (params) => {
-      return <Link to={{pathname: `/update-contact/${params.row.ID}`, state: params.row}} ><ModeEditOutlineSharpIcon /></Link>;
+      return <Link to={{pathname: `/update-contact/${params.row.ID}`, state: params.row}} style={{color: '#1976d2'}}><ModeEditOutlineSharpIcon /></Link>;
     }
   },
   {
@@ -60,8 +53,10 @@ const columns = [
     width: 100,
     renderCell: (params) => {
       return <Button onClick={() => {
-        deleteContact(params.row.ID);
-        window.location.reload()
+        if(window.confirm('Are you sure?')){
+          deleteContact(params.row.ID);
+          window.location.reload()
+        }
       }}><DeleteIcon /></Button>;
     }
   },
@@ -84,6 +79,7 @@ class DataGridTable extends React.Component {
         Phone: c.Phone,
         Name: c.Name
       }) 
+      return 0
     })
     console.log(data);
     this.setState({ contacts: list })
@@ -95,7 +91,7 @@ class DataGridTable extends React.Component {
 
   render() {
     return (
-      <div className='table' style={{ height: 600, width: '45%' }}>
+      <div className='table' style={{ height: 600, width: '39%' }}>
         <div style={{ height: '100%', width: 'auto' }}>
           <DataGrid rows={this.state.contacts} columns={columns} />
         </div>

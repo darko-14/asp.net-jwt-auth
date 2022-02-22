@@ -1,12 +1,10 @@
 import React, { Component } from 'react'
-import ContactGrid from '../components/Contacts/ContactGrid'
-import { authUser } from '../service/auth.service'
-import { getContacts } from '../service/contacts.service'
-import { Button, Box } from '@mui/material'
-import {Link} from 'react-router-dom'
+import { Button } from '@mui/material'
 import '../static/home.css'
 import DataGridTable from '../components/DataGridTable'
 import { withRouter } from 'react-router-dom'
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 
 class HomePage extends Component {
 
@@ -21,10 +19,9 @@ class HomePage extends Component {
         <div>
             <h1>Wellcome {this.props.user}</h1>
            <div className='buttons'>
-                <Button variant="contained" href='/add-contact'>Add New Contact</Button>
-                <Button variant="contained" color='error' onClick={this.logout} href='/login'>Logout</Button>
+                <Button variant="contained" startIcon={<AddBoxOutlinedIcon />} href='/add-contact'>Add New Contact</Button>
+                <Button variant="contained" color='error' endIcon={<LogoutOutlinedIcon />} onClick={this.logout} href='/login'>Logout</Button>
             </div>
-            {/* <ContactGrid /> */}
             <DataGridTable/> 
         </div>
         )

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import '../../static/form.css'
-import { Paper, Button, Grid, Typography, Link, TextField } from '@mui/material'
+import { Paper, Button, Grid, Typography, TextField } from '@mui/material'
 import { withRouter } from 'react-router-dom';
 import {createNumber} from '../../service/numbers.service';
 
@@ -46,7 +46,7 @@ class AddNumber extends Component {
                                         <Button className="button-block" variant="contained" onClick={() => this.handleAddNumber(this.props.match.params.id)}>Add</Button>
                                     </Grid>
                                     <Grid item>
-                                        <Button className="button-block" onClick={() => {window.location.href = '/numbers'}} variant="contained">Cancel</Button>
+                                        <Button className="button-block" onClick={() => window.history.back()} variant="contained">Cancel</Button>
                                     </Grid>
                                 </Grid>
                             </Paper>

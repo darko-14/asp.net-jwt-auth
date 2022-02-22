@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import { Button, Typography, Paper, Link, Grid, TextField } from '@mui/material'
 import '../static/form.css'
 import { register } from '../service/users.service';
+import PersonAddAltRoundedIcon from '@mui/icons-material/PersonAddAltRounded';
+import LoginIcon from '@mui/icons-material/Login';
+
 
 export default class Register extends Component {
 
@@ -30,9 +33,9 @@ handleSubmit = () => {
             <Grid item>
                 <Grid container spacing={2} direction='column' justify="center" className='form'>
                     <Paper elevation={2} className='form-background'>
-                        <Grid container spacing={3} direction='column'>
-                            <Typography component="h1" variant="h4">
-                                Register
+                        <Grid container spacing={3} direction='column' >
+                            <Typography component="h1" variant="h3">
+                                <PersonAddAltRoundedIcon fontSize='large'/> Register
                             </Typography>
                             <Grid item>
                                 <TextField type="text" placeholder="Username" fullWidth  name="username" label="Username"
@@ -47,7 +50,7 @@ handleSubmit = () => {
                                 onChange={this.handleChange} variant="outlined" required autoFocus/>
                             </Grid>
                             <Grid item>
-                                <Button className="button-block" onClick={this.handleSubmit} variant="contained">Register</Button>
+                                <Button className="button-block" startIcon={<LoginIcon />}  onClick={this.handleSubmit} variant="contained">Register</Button>
                             </Grid>
                             <Grid item>
                             <Link href='/login' variant='body2'>

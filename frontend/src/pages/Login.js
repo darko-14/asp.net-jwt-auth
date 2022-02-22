@@ -3,7 +3,7 @@ import { Button, Typography, Paper, Link, Grid, TextField } from '@mui/material'
 import '../static/form.css'
 import LoginIcon from '@mui/icons-material/Login';
 import {authUser} from '../service/auth.service'
-
+import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 
 export default class Login extends Component {
 
@@ -32,8 +32,8 @@ export default class Login extends Component {
                         <Grid container direction="column" justify="center" spacing={4} className="form">
                             <Paper variant="elevation" elevation={2} className="form-background">
                                <Grid container spacing={3} direction='column'>
-                                    <Typography component="h1" variant="h4">
-                                        Login
+                                    <Typography component="h1" variant="h3" >
+                                       <PersonRoundedIcon fontSize='large'/> Login
                                     </Typography>
                                     <Grid item>
                                         <TextField type="email" placeholder="Username" fullWidth  name="username" label="Username"

@@ -5,18 +5,16 @@ import { Link } from 'react-router-dom'
 import '../../static/home.css'
 import DeleteIcon from '@mui/icons-material/Delete';
 import { withRouter } from 'react-router-dom'
-import { getNumbers } from '../../service/numbers.service';
 import ModeEditOutlineSharpIcon from '@mui/icons-material/ModeEditOutlineSharp';
 import {deleteNumber} from '../../service/numbers.service';
+import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
+import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 
 const columns = [
   { 
-    field: '*', 
-    headerName: '*', 
+    field: 'index', 
+    headerName: '#', 
     width: 50,
-    renderCell:(params) => {
-      return <input type='checkbox' />
-    }
   },
   {
     field: 'Description',
@@ -33,9 +31,7 @@ const columns = [
     headerName: 'Update',
     width: 100,
     renderCell: (params) => {
-      // return <Link to={{pathname: `/update-number/${params.row.id}`, state: params.row}} ><ModeEditOutlineSharpIcon /></Link>;
-      // Button><Link to={`add-number/${this.state.contactID}`}>Add</Link></Button>
-      return <Link to={{pathname: `update-number/${params.row.id}`, state: params.row}} ><ModeEditOutlineSharpIcon /></Link>
+      return <Link to={{pathname: `update-number/${params.row.id}`, state: params.row}} style={{color: '#1976d2'}}><ModeEditOutlineSharpIcon /></Link>
     }
   },
   {
@@ -44,8 +40,10 @@ const columns = [
     width: 100,
     renderCell: (params) => {
       return <Button onClick={() => {
-        deleteNumber(params.row.id);
-        window.location.reload()
+        if(window.confirm('Are you sure?')){
+          deleteNumber(params.row.id);
+          window.location.reload()
+        }
       }}><DeleteIcon /></Button>;
     }
   },
@@ -66,10 +64,12 @@ class NumberGrid extends Component {
     data.map((c, i) => {
       list.push({
         id: c.ID,
+        index: i+1,
         contact_id: c.ContactID,
         Description: c.Description,
         Number: c.Number1,
-      }) 
+      })
+      return 0 
     })
     this.setState({ numbers: list })
     console.log(data);
@@ -90,8 +90,8 @@ class NumberGrid extends Component {
         <h1>{this.props.location.state.Name}'s Number List</h1>
         <div className='table' style={{ height: 500, width: '37%', marginTop: 20}}>
           <Box display='flex' justifyContent='space-between'>
-              <Button variant='contained' href={`add-number/${this.state.contactID}`}>Add New Number</Button>
-              <Button variant="contained" color='warning' href='/'>Go Back</Button>
+              <Button variant='contained' startIcon={<AddBoxOutlinedIcon />} href={`add-number/${this.state.contactID}`}>Add New Number</Button>
+              <Button variant="contained" startIcon={<ArrowBackOutlinedIcon />} color='warning' href='/'>Go Back</Button>
           </Box>
           <div style={{ height: '100%', width: 'auto', marginTop: 10}}>
             <DataGrid rows={this.state.numbers} columns={columns} />
