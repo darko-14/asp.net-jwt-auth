@@ -6,3 +6,11 @@
     width: 55%;
     padding: 15px;
 }
+
+.buttons{
+    display: flex;
+    width: 45%;
+    margin: auto;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}

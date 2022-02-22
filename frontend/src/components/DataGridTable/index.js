@@ -95,7 +95,7 @@ class DataGridTable extends React.Component {
 
   render() {
     return (
-      <div className='table' style={{ height: 500, width: '50%' }}>
+      <div className='table' style={{ height: 600, width: '45%' }}>
         <div style={{ height: '100%', width: 'auto' }}>
           <DataGrid rows={this.state.contacts} columns={columns} />
         </div>

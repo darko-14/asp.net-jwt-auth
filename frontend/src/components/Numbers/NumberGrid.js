@@ -21,12 +21,12 @@ const columns = [
   {
     field: 'Description',
     headerName: 'Description',
-    width: 200,
+    width: 250,
   },
   {
     field: 'Number',
     headerName: 'Number',
-    width: 320,
+    width: 250,
   },
   {
     field: 'Update',
@@ -71,9 +71,9 @@ class NumberGrid extends Component {
         Number: c.Number1,
       }) 
     })
-    this.setState({ contacts: list })
+    this.setState({ numbers: list })
     console.log(data);
-    console.log(this.state.contacts);
+    console.log('state',  this.state);
   }
 
   componentDidMount(){
@@ -87,17 +87,14 @@ class NumberGrid extends Component {
   render() {
     return (
       <div>
-        <div className='table' style={{ height: 500, width: '40%', marginTop: 20}}>
+        <h1>{this.props.location.state.Name}'s Number List</h1>
+        <div className='table' style={{ height: 500, width: '37%', marginTop: 20}}>
           <Box display='flex' justifyContent='space-between'>
-              <Button><Link to={`add-number/${this.state.contactID}`}>Add</Link></Button>
-              <Button variant="outlined">
-                  <Link underline='none' to="/" variant="body2">   
-                      Back
-                  </Link>
-              </Button>
+              <Button variant='contained' href={`add-number/${this.state.contactID}`}>Add New Number</Button>
+              <Button variant="contained" color='warning' href='/'>Go Back</Button>
           </Box>
-          <div style={{ height: '100%', width: 'auto' }}>
-            <DataGrid rows={this.state.contacts} columns={columns} />
+          <div style={{ height: '100%', width: 'auto', marginTop: 10}}>
+            <DataGrid rows={this.state.numbers} columns={columns} />
           </div>
         </div>
       </div>

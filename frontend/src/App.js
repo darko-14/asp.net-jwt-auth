@@ -27,49 +27,49 @@ class App extends Component {
 
   render(){
     return (
-      <Router>
-        <Header />
-        <Switch>
-          <div className="App">
+      <div className="App">
+        <Router>
+          <Header />
+          <Switch>
+              
+            <Route exact path='/'>{
+              this.state.user === null ? 
+                <Login />
+              :
+                <HomePage user={this.state.user} />
+              }</Route>
             
-          <Route exact path='/'>{
-            this.state.user === null ? 
+            <Route path='/login'>
               <Login />
-            :
-              <HomePage user={this.state.user} />
-            }</Route>
-          
-          <Route path='/login'>
-            <Login />
-          </Route>
+            </Route>
 
-          <Route path='/register'>
-            <Register />
-          </Route>
+            <Route path='/register'>
+              <Register />
+            </Route>
 
-          <Route path='/add-contact/'>
-            <AddContact />
-          </Route>
+            <Route path='/add-contact/'>
+              <AddContact />
+            </Route>
 
-          <Route path='/update-contact/:id'>
-            <UpdateContact />
-          </Route>
+            <Route path='/update-contact/:id'>
+              <UpdateContact />
+            </Route>
 
-          <Route path='/numbers'>
-            <NumberGrid />
-          </Route>
+            <Route path='/numbers'>
+              <NumberGrid />
+            </Route>
 
-          <Route path='/add-number/:id'>
-            <AddNumber />
-          </Route>
+            <Route path='/add-number/:id'>
+              <AddNumber />
+            </Route>
 
-          <Route path='/update-number/:id'>
-            <UpdateNumber />
-          </Route>
+            <Route path='/update-number/:id'>
+              <UpdateNumber />
+            </Route>
 
-          </div>
-        </Switch>
-      </Router>
+          </Switch>
+        </Router>
+      </div>
     );
   } 
 }

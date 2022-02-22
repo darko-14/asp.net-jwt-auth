@@ -13,7 +13,6 @@ export const createNumber = (contact_id, number) => {
         body: JSON.stringify(number)
     })
     .then(res => res.json())
-    .then(console.log)
 }
 
 export const updateNumber = (contact_id, number) => {

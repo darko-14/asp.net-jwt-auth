@@ -20,18 +20,10 @@ class HomePage extends Component {
         return (
         <div>
             <h1>Wellcome {this.props.user}</h1>
-            <Box display='flex' justifyContent='space-between' mx='475px' >
-                <Button variant="outlined">
-                    <Link  to="add-contact">   
-                        Add New Contact 
-                    </Link>
-                </Button>
-                <Button variant="outlined" onClick={this.logout}>
-                    <Link underline='none' href="/login" variant="body2">   
-                    Logout
-                    </Link>
-                </Button>
-            </Box>
+           <div className='buttons'>
+                <Button variant="contained" href='/add-contact'>Add New Contact</Button>
+                <Button variant="contained" color='error' onClick={this.logout} href='/login'>Logout</Button>
+            </div>
             {/* <ContactGrid /> */}
             <DataGridTable/> 
         </div>
